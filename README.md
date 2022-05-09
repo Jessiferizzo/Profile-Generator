@@ -38,8 +38,7 @@
   
   ## Questions
   Please contact me using the following links:
-
-  :octocat: [GitHub:Jessiferizzo](https://github.com/jessiferizzo)
+  👋 [GitHub:Jessiferizzo](https://github.com/jessiferizzo)
   
   ✉️ [Email: jsisavath@gmail.com](mailto:jsisavath@gmail.com) 
 
