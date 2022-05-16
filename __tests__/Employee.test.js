@@ -1,10 +1,10 @@
 const Employee= require ('../lib/Employee.js')
-let employee= new Employee ('Dave',345,'dave@gmail.com')
+let employee= new Employee ('Jessica',345,'jsisavath@gmail.com')
 
 test ('can get username from getName()', () =>{
-expect(employee.getName()).toEqual('Patty')
+expect(employee.getName()).toEqual('Jessica')
 });
 
 test ('can get id from getId()', () =>{
-    expect(employee.getId()).toEqual(567)
+    expect(employee.getId()).toEqual(345)
     });

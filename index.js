@@ -1,57 +1,141 @@
 //required packages
 const inquirer = require('inquirer');
 const fs = require('fs');
+const generatePage = require('./src/page-template');
 
-//path constants??
-const path = require("path");
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
-
-//whats this suppose to do??
-//required module exports
-//const generateTeam = require("./src/template.js")
 
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
 //creates employee array
-let engineerArr = [
-  {name:'john', id:2376,email:'email.com'},
-  {name:'zoey', id:4226,email:'jess.com'}
-];
+let teamArray = [];
 
-function generateEngineers(){
-let engineers='';
-for (let i=0; i<2; i++){
-  let card=`<p>${engineerArr[i].name}<p><p>${engineerArr[i].id}<p><p>${engineerArr[i].email}<p>`;
-  engineers=engineers+card 
+function initApp (){
+  buildTeam();
 }
-return engineers
-}
-//makes index.html
-const generatePage = () => {
-    return `
-    <!DOCTYPE html> 
-    <html lang="en"> 
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>Team Profile Generator</title>
-    </head>
-  
-    <body>
-    ${generateEngineers()}
-      <h1>Hello</h1>
-      <h2><a href="https://github.com/">Github</a></h2>
-    </body>
-    </html>
-    `;
-  };
 
-  fs.writeFile('./dist/index.html', generatePage(), err => {
-    if (err) throw err;
-  
-    console.log('Portfolio complete! Check out index.html to see the output!');
+function buildTeam() {
+  inquirer.prompt([{
+    type: "list",
+    message: "What type of employee role would you like to add to your team?",
+    name: "rolePrompt",
+    choices: ["Manager", "Engineer", "Intern", "Finish building team."]
+  }]).then(function (userInput) {
+    switch (userInput.rolePrompt) {
+      case "Manager":
+        addManager();
+        break;
+      case "Engineer":
+        addEngineer();
+        break;
+      case "Intern":
+        addIntern();
+        break;
+      default:
+        generateHTML();
+    }
+  })
+}
+
+
+// Questions array for all employees
+function addManager() {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "managerName",
+      message: "What is the team manager's name?"
+    },
+    {
+      type: "input",
+      name: "managerId",
+      message: "What is the team manager's ID?"
+    },
+    {
+      type: "input",
+      name: "managerEmail",
+      message: "What is the team manager's email?"
+    },
+    {
+      type: "input",
+      name: "managerOfficeNumber",
+      message: "What is the team manager's office number?"
+    }
+
+  ]).then(answers => {
+    const manager = new Manager(answers.mamagerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
+    teamArray.push(manager);
+    buildTeam();
   });
+}
+
+function addEngineer() {
+  inquirer.prompt([
+
+    {
+      type: "input",
+      name: "engineerName",
+      message: "What is the engineer's name?"
+    },
+    {
+      type: "input",
+      name: "engineerId",
+      message: "What is the engineer's ID?"
+    },
+    {
+      type: "input",
+      name: "engineerEmail",
+      message: "What is the engineer's email?"
+    },
+    {
+      type: "input",
+      name: "engineerGithub",
+      message: "What is the engineer's GitHub username?"
+    },
+  ]).then(answers => {
+    const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+    teamArray.push(engineer);
+    buildTeam();
+  });
+}
+
+function addIntern() {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "internName",
+      message: "What is the intern's name?"
+    },
+    {
+      type: "input",
+      name: "internId",
+      message: "What is the intern's ID?" 
+    },
+    {
+      type: "input",
+      name: "internEmail",
+      message: "What is the intern's email?"
+    },
+    {
+      type: "input",
+      name: "internSchool",
+      message: "What is the intern's school name?"
+    }
+  ]).then(answers => {
+    const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+    teamArray.push(intern);
+    buildTeam();
+  });
+
+}
+
+function generateHTML (){
+    fs.writeFile('./dist/index.html', generatePage(), err => {
+      if (err) throw err;
+    // Success message
+      console.log("Look in 'dist' folder! for index.HTML!");
+    });
+  }
+  // Function call to initialize app
+  initApp();

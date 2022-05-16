@@ -39,7 +39,7 @@
   ## Questions
   Please contact me using the following links:
   
-  👋 [GitHub:Jessiferizzo](https://github.com/jessiferizzo)
+  :octocat: [GitHub:Jessiferizzo](https://github.com/jessiferizzo)
   
   ✉️ [Email: jsisavath@gmail.com](mailto:jsisavath@gmail.com) 
 
