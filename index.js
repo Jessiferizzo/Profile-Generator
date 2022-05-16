@@ -1,7 +1,7 @@
 //required packages
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generatePage = require('./src/page-template');
+const generateTeam = require('./src/page-template');
 
 
 const Engineer = require("./lib/Engineer");
@@ -64,7 +64,7 @@ function addManager() {
     }
 
   ]).then(answers => {
-    const manager = new Manager(answers.mamagerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
+    const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
     teamArray.push(manager);
     buildTeam();
   });
@@ -131,7 +131,7 @@ function addIntern() {
 }
 
 function generateHTML (){
-    fs.writeFile('./dist/index.html', generatePage(), err => {
+    fs.writeFile('./dist/index.html', generateTeam(teamArray), err => {
       if (err) throw err;
     // Success message
       console.log("Look in 'dist' folder! for index.HTML!");
